@@ -47,6 +47,7 @@ Code : [Arduino example code](https://github.com/Cleric-K/vJoySerialFeeder/tree/
 
 Done pushing data from Arduino to the vjoyfeeder and connect it into vjoy. Able to control the truck in game using two button and one analog input to control acceleration,brake and turning.
 
-![](imgaes/first.jpg)
+<img src="images/first.jpg" width="600">
 
+Youtube video link : []()
 
