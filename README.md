@@ -51,3 +51,18 @@ Done pushing data from Arduino to the vjoyfeeder and connect it into vjoy. Able 
 
 Youtube video link : []()
 
+
+### Day3 2022/1/22 - trying to connect Arduino and EV3 via USB cable
+
+today I found out that RobotC didn't even support the full feture of bluetooth mailbox so I quickly switch to ev3dev and booted it up. But still cant find a way to connect 
+Arduiino togeter but I think I found someuseful informations.
+
+*https://github.com/ev3dev/ev3dev/issues/1482
+
+*https://github.com/ev3dev/ev3dev/issues/1159
+
+*https://docs.ev3dev.org/projects/lego-linux-drivers/en/ev3dev-stretch/ev3.html#in-port-raw-mode
+
+*https://www.ev3dev.org/docs/kernel-hackers-notebook/ev3-uart/
+
+
