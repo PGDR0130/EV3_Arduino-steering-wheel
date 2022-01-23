@@ -67,7 +67,8 @@ I follow the procress from this video( [GreatScott's Arduino + Bluetooth](https:
 The connection from Arduino to the computer uses Tx and Rx pin to transmiss data. One way to connect the bluetooth device is using Software Serial (software serial libraries [difference](https://arduino.stackexchange.com/questions/34126/whats-the-difference-between-all-the-software-serial-libraries-which-one-is-ar)). 
 After all I chooses AltSoftSerial it seems like it the best of all libraries. But there are also some downsides you could only add one serial port and the pins of the ports are fixed so you couldn't change it ([more informations](https://www.pjrc.com/teensy/td_libs_AltSoftSerial.html)).
 
-picuter ::::::
+<img src="images/CH-05_conn%20.jpg" width="450"> <img src="images/CH-05_conn_re.jpg" width="450">
+
 
 ### Day3 2022/1/22 - trying to connect Arduino and EV3 via USB cable
 
@@ -111,3 +112,27 @@ ser.write(bytes)
 ```
 > Through this method I can now communicate EV3 with arduino using Serial port 
 > blutooth serial port is also possible using this method but you need to find the correct port first.
+
+### Day4 - connect Ev3 to Arduino's HC-05(bluetooth device)
+
+Today I found out that there is only one USB port avalible for Serial on the nano board, so forget what I did yesterday because I wont use that USB port any more.
+I'm switching bluetooth to communicate with Ev3 instead.
+
+1. start from the ev3 and pair the bluetooth device 
+  > SSH into ev3 use bluetoothctl to pair with the CH-05 --> [details from Dmitri Iouchtchenko](https://gist.github.com/0/c73e2557d875446b9603)
+2. send message from using python (similar from yesterday)
+```Python
+import serial
+ser = serial.Serial("/dev/rfcomm0", 9600)
+# the /dev/rfcomm0 is bind with the serial port in the first step
+ser.write(bytes)
+```
+3. Arduino receive from Ev3 via bluetooth
+
+    because I need to receive multi digits number but I could figuer it out because the .write() will send message sepearty.
+    It's not until I found this post [Serial input Basics](https://forum.arduino.cc/t/serial-input-basics-updated/382007) (Example 2) that I know how to get it working. It's 
+    simply determine where to end the reading and let out the hole data so there won't be partial data.
+    After pairing the two I started a simple test and it did work well. Now I can send the roation degree of the motor to the Arduino and let it do the job
+
+<img src="images/arduino_to_ev3_via_bluetooth.png" width="350">  <-- Arduino(COM7) printing values that was send by ev3 via bluetooth
+
