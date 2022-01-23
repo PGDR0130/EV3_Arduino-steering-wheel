@@ -2,43 +2,25 @@
 #include <AltSoftSerial.h>
 
 
-// //////////////////
-// Edit here to customize
-
-// How often to send data?
 #define UPDATE_INTERVAL 5 // milliseconds
+#define BAUD_RATE 115200
+#define ANALOG_REFERENCE DEFAULT
 
-// To disable reading a specific type of pin, set the count to 0 and remove all items from the pins list
+// values for receving from bluetooth
+const byte numChars = 32;
+char receivedChars[numChars];   // an array to store the received data
+boolean newData = false;
+
+
 
 // 1. Analog channels. Data can be read with the Arduino's 10-bit ADC.
-// This gives values from 0 to 1023.
-// Specify below the analog pin numbers (as for analogRead) you would like to use.
-// Every analog input is sent as a single channel.
-// Arduino Mega has 16 analog pins, however if your device has fewer you'll need to modify the count and pin list below
-
 #define ANALOG_INPUTS_COUNT 8
 byte analogPins[] = {A0, A1, A2, A3, A4, A5, A6, A7}; // element count MUST be == ANALOG_INPUTS_COUNT
 
 
 // 2. Digital channels. Data can be read from Arduino's digital pins.
-// They could be either LOW or HIGH.
-// Specify below the digital pin numbers (as for digitalRead) you would like to use.
-// Every pin is sent as a single channel. LOW is encoded as 0, HIGH - as 1023
-// Arduino Mega has 54 digital only pins and the ability to read the analog pins as digital via pin numbers 55-68. If your device has fewer you'll need to modify the count and pin list below
 #define DIGITAL_INPUTS_COUNT 9
 byte digitalPins[] = {2, 3, 4, 5, 6, 7, 10, 11, 12}; // element count MUST be == DIGITAL_INPUTS_COUNT
-
-
-// Define the appropriate analog reference source. See
-// https://www.arduino.cc/reference/en/language/functions/analog-io/analogreference/
-// Based on your device voltage, you may need to modify this definition
-#define ANALOG_REFERENCE DEFAULT
-
-// Define the baud rate
-#define BAUD_RATE 115200
-
-// /////////////////
-
 
 
 //***********************************************
@@ -50,8 +32,8 @@ first digital pin is 9th on recever
 //***********************************************
 
 IBus ibus(NUM_CHANNELS);
-AltSoftSerial blueSerial;
-//8->Rx, 9->Tx
+// for bluetooth device
+AltSoftSerial blueSerial; //8->Rx, 9->Tx
 
 
 void setup()
@@ -64,6 +46,8 @@ void setup()
   }
 }
 
+
+int wheelDegree;
 void loop()
 {
   int i, bm_ch = 0;
@@ -71,9 +55,22 @@ void loop()
 
   ibus.begin();
 
+  // update to read data from bluetooth
+  recvWithEndMarker();
+
+  // get wheel degree if avalible
+  if(newData = true) {
+    wheelDegree = atoi(receivedChars);
+    newData = false;
+  }
+  
   // read analog pins - one per channel
   for(i=0; i < ANALOG_INPUTS_COUNT; i++)
-    ibus.write(analogRead(analogPins[i]));
+    if(i == 1){
+      ibus.write(wheelDegree);
+    }else{
+      ibus.write(analogRead(analogPins[i])); 
+    }
 
   // read digital pins - one per channel
   for(i=0; i < DIGITAL_INPUTS_COUNT; i++)
@@ -86,4 +83,29 @@ void loop()
   if(time < UPDATE_INTERVAL)
     // sleep till it is time for the next update
     delay(UPDATE_INTERVAL  - time);
+}
+
+
+// receive data from Ev3 via bluetooth device
+void recvWithEndMarker() {
+    static byte ndx = 0;
+    char endMarker = '\n';
+    char rc;
+    
+    while (blueSerial.available() > 0 && newData == false) {
+        rc = blueSerial.read();
+
+        if (rc != endMarker) {
+            receivedChars[ndx] = rc;
+            ndx++;
+            if (ndx >= numChars) {
+                ndx = numChars - 1;
+            }
+        }
+        else {
+            receivedChars[ndx] = '\0'; // terminate the string
+            ndx = 0;
+            newData = true;
+        }
+    }
 }
