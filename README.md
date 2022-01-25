@@ -113,7 +113,7 @@ ser.write(bytes)
 > Through this method I can now communicate EV3 with arduino using Serial port 
 > blutooth serial port is also possible using this method but you need to find the correct port first.
 
-### Day4 - connect Ev3 to Arduino's HC-05(bluetooth device)
+### Day4 2022/1/23 - connect Ev3 to Arduino's HC-05(bluetooth device)
 
 Today I found out that there is only one USB port avalible for Serial on the nano board, so forget what I did yesterday because I wont use that USB port any more.
 I'm switching bluetooth to communicate with Ev3 instead.
@@ -136,3 +136,31 @@ ser.write(bytes)
 
 <img src="images/arduino_to_ev3_via_bluetooth.png" width="350">  <-- Arduino(COM7) printing values that was send by ev3 via bluetooth
 
+
+### Day5 2022/1/25 - add bluetooth auto connection and rest the turning degree of the wheel
+
+1. auto bind bluetooth device 
+
+    I don't know why but every time after rebooting the binded "rfcomm0" will be reset and disapear in /dev folder. so I find a way to automatically bind the bluetooth 
+    address into the /dev folder in order for the python serial to work. 
+```Python
+import os
+# just a simple one line command for linux system to enter password
+os.system('echo <password for system> | sudo -S rfcomm bind 0 <bluetooth address>') # bluetoothctl to find address
+```
+> It will bind the address into /dev if it haven't be else It will just pass to next line
+
+2. rest motor encoder to defult position
+
+    And then when I was playing with the will I find out that if I turn too fast or to hard the encoder of the motor won't keep up with the real degree of my turning rate.
+    There was no way to solve the problem so I just add on button when it was press it will reset the wheel degree to the defult degree.
+
+    You can also set to other buttons [ev3 Buttons](https://sites.google.com/site/ev3devpython/learn_ev3_python/buttons)
+
+```Python
+from ev3dev2.auto import Button
+if(Button.enter):
+  R1.reset()
+  L1.reset()
+  # L1 and R1 is the LargeMotor
+```
