@@ -33,16 +33,18 @@ Code : [Arduino example code](https://github.com/Cleric-K/vJoySerialFeeder/tree/
 
 ### Libraries for Arduino
 - [AltSoftSerial](https://www.arduino.cc/reference/en/libraries/altsoftserial/) - adding software serial port to arduino >> use for the bluetooth devices or more
+- [LiquidCrystal_I2C](https://www.arduino.cc/reference/en/libraries/liquidcrystal-i2c/) - display LCD library By.Frank de Brabander
 
 
 
 
 ### Hardware
 - Arduino - to receve data from any phycial device or button and out put it from serial port to computer
-  - CH-05 (optional) - bluetooth device for arduino to transfer data 
-
+  - CH-05 - bluetooth device for arduino to transfer data 
+  - LCD display(optional) - to display the state of the pin both digital and analog.
+  
 - EV3 - to control the motors and monitor rotation angle of the physical wheel 
-  - flash ev3dev on to the SD card 
+  - flash ev3dev on to the SD card [ev3dev offical site](https://www.ev3dev.org/)
 
 
 
@@ -67,7 +69,7 @@ I follow the procress from this video( [GreatScott's Arduino + Bluetooth](https:
 The connection from Arduino to the computer uses Tx and Rx pin to transmiss data. One way to connect the bluetooth device is using Software Serial (software serial libraries [difference](https://arduino.stackexchange.com/questions/34126/whats-the-difference-between-all-the-software-serial-libraries-which-one-is-ar)). 
 After all I chooses AltSoftSerial it seems like it the best of all libraries. But there are also some downsides you could only add one serial port and the pins of the ports are fixed so you couldn't change it ([more informations](https://www.pjrc.com/teensy/td_libs_AltSoftSerial.html)).
 
-<img src="images/CH-05_conn%20.jpg" width="450"> <img src="images/CH-05_conn_re.jpg" width="450">
+<img src="images/CH-05_conn%20.jpg" width="400"> <img src="images/CH-05_conn_re.jpg" width="400">
 
 
 ### Day3 2022/1/22 - trying to connect Arduino and EV3 via USB cable
@@ -164,3 +166,22 @@ if(Button.enter):
   L1.reset()
   # L1 and R1 is the LargeMotor
 ```
+### Day6-7 2022/1/26-27 - setup LCD display to display pin state
+
+Added a LCD I2C screen (16*2) to display the state of the digital input and analog input.
+
+Uses custom char to display two pin in two block of the LCD display. I fount a website that can  [generate custom character](https://maxpromer.github.io/LCD-Character-Creator/)
+automatically but it can only setup 8 custom char limited to the ram of the display.
+
+create custom char :
+```Python
+byte myChar= {
+  """
+  use the link to generate custom char. Both Hex and Binary are useable.
+  """
+};
+lcd.createChar(<char num>, myChar);
+# if there is more custom char the char num should be distinct but between 0~7
+lcd.write(<char num>);
+```
+<img src="images/LCD_Display.jpg" width="450">
