@@ -60,7 +60,7 @@ Done pushing data from Arduino to the vjoyfeeder and connect it into vjoy. Able 
 
 <img src="images/twoD+oneA.jpg" width="600">
 
-Youtube video link : []()
+Youtube video link : [Feed data to game (Arduino)](https://youtu.be/CkFdMmpg-gE)
 
 ### Day2 2022/1/21 - added CH-05 bluetooth device to Arduino board
 
