@@ -185,3 +185,4 @@ lcd.createChar(<char num>, myChar);
 lcd.write(<char num>);
 ```
 <img src="images/LCD_Display.jpg" width="450">
+(video_LCD_)[https://youtu.be/yhB6UovjPHQ]
