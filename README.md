@@ -1,4 +1,4 @@
-# A steering wheel using just EV3 and arduino
+# A steering wheel using EV3 and arduino
 
 ## Why?
 
