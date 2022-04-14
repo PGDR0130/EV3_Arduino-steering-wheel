@@ -94,7 +94,7 @@ Arduiino togeter but I think I found someuseful informations.
 #change directory to /dev
 cd /dev  
 
-#list all element infolder 
+#list all element in folder 
 ls 
 ```
 > you'll find something like this <br>
@@ -139,7 +139,7 @@ ser.write(bytes)
 <img src="images/arduino_to_ev3_via_bluetooth.png" width="350">  <-- Arduino(COM7) printing values that was send by ev3 via bluetooth
 
 
-### Day5 2022/1/25 - add bluetooth auto connection and rest the turning degree of the wheel
+### Day5 2022/1/25 - add bluetooth auto connection and reset the turning degree of the wheel
 
 1. auto bind bluetooth device 
 
@@ -185,4 +185,4 @@ lcd.createChar(<char num>, myChar);
 lcd.write(<char num>);
 ```
 <img src="images/LCD_Display.jpg" width="450">
-(video_LCD_)[https://youtu.be/yhB6UovjPHQ]
+[LCD_Display_vido](https://youtu.be/yhB6UovjPHQ)
