@@ -6,6 +6,8 @@ A projecgt build just for me to get more fun in the game (Starts at 2022/1/20 st
 
 Building a steering wheel using EV3, Lego parts and Arduino nano. Transferring data using both and bluetooth and USB cable.
 
+## Result 
+![final_speed](https://user-images.githubusercontent.com/77951362/174493832-b1f26fc6-91b2-428f-a36e-6091c0988aac.gif)
 
 ## Software and Hardware
 
