@@ -2,7 +2,7 @@
 
 ## Why?
 
-A projecgt build just for me to get more fun in the game (Starts at 2022/1/20 still in progress).
+I think it is more fun to play with a physical steering wheel, but all the steering wheel on the market are too expensive. Making one is the best way to learn and get the result.
 
 Building a steering wheel using EV3, Lego parts and Arduino nano. Transferring data using both and bluetooth and USB cable.
 
