@@ -54,7 +54,7 @@ Code : [Arduino example code](https://github.com/Cleric-K/vJoySerialFeeder/tree/
 
 
 
-## Process Record
+## Progress
 
 ### Day1 2022/1/21 - Arduino to computer
 
